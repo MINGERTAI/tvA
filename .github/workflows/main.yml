@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
     
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12.3'
 
@@ -45,3 +45,11 @@ jobs:
           git commit *.m3u -m "Add generated file"
           #git pull --rebase
           git push -f
+      - name: Delete Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        continue-on-error: true
+        with:
+          token: ${{ github.token }}
+          repository: ${{github.repository}}
+          retain_days: 0
+          keep_minimum_runs: 1
